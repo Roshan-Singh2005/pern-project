@@ -9,8 +9,7 @@ import { prisma } from "../db/prisma";
 export const authRouter = Router();
 
 authRouter.post("/register", async (req: Request, res: Response) => {
-  console.log(JWT_SECRET);
-  const decoded = registerSchema.safeParse(req.body);
+  const decoded = registerSchema.safeParse(req.body); // check schema = body 
   if (!decoded.success) {
     return res.status(400).json({ error: "Invalid request body" });
   }
@@ -26,7 +25,7 @@ authRouter.post("/register", async (req: Request, res: Response) => {
       },
     });
 
-    const token = jwt.sign({ id: user.id }, JWT_SECRET as string);
+    const token = jwt.sign({ id: user.id }, JWT_SECRET as string); //id+jwt secret token
     res.status(201).json({ user: user.name, token });
   } catch (error) {
     res.status(500).json({ error: error });
