@@ -26,7 +26,8 @@ authRouter.post("/register", async (req: Request, res: Response) => {
     });
 
     const token = jwt.sign({ id: user.id }, JWT_SECRET as string); //id+jwt secret token
-    res.status(201).json({ user: user.name, token });
+    res.cookie("token",token);
+    return res.status(201).json({ user: user.name, token });
   } catch (error) {
     res.status(500).json({ error: error });
   }
@@ -49,7 +50,8 @@ authRouter.post("/login", async (req: Request, res: Response) => {
       return res.status(400).json({ error: "Invalid password" });
     }
     const token = jwt.sign({ id: user.id }, JWT_SECRET as string);
-    res.status(200).json({ user: user.name, token });
+    res.cookie("token",token);
+    return res.status(200).json({ user: user.name, token });
   } catch (error) {
     res.status(500).json({ error: "Failed to login user" });
   }
