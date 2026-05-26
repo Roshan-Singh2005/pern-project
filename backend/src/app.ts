@@ -15,7 +15,7 @@ app.get("/health",(req,res)=>{
 });
 
 app.use("/auth", authRouter);
-app.use("/todo", todoRouter);
+app.use("/todo", authMiddleware, todoRouter);
 
 
 app.listen(3000,()=>{
