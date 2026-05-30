@@ -10,14 +10,14 @@ export const authRouter = Router();
 
 authRouter.post("/register", async (req: Request, res: Response) => {
   const decoded = registerSchema.safeParse(req.body); // check schema = body 
-  if (!decoded.success) {
+  if (!decoded.success) { 
     return res.status(400).json({ error: "Invalid request body" });
   }
   const { email, name, password }: any = decoded.data;
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await prisma.user.create({
+    const user = await prisma.user.create({ 
       data: {
         email,
         name,
@@ -55,4 +55,4 @@ authRouter.post("/login", async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({ error: "Failed to login user" });
   }
-});
+}); 

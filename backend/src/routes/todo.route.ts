@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { Request, Response } from "express";
 import { createTodoSchema } from "../schemas/todo.schema";
-import { updateTodoSchema,deleteTodoSchema } from "../schemas/todo.schema";
+import { updateTodoSchema} from "../schemas/todo.schema";
 import { prisma } from "../db/prisma";
 
 export const todoRouter = Router();
@@ -85,10 +85,7 @@ todoRouter.put("/:id",async(req:Request,res:Response)=>{
 
 todoRouter.delete("/:id",async(req:Request, res:Response)=>{
   const todoId = req.params.id;
-  const decoded: any = deleteTodoSchema.safeParse(req.body);
-   if(!decoded.success){
-    return res.status(400).json({error:"invalid request body"});
-   }try{
+  try{
     const todo = await prisma.todo.delete({
       where:{
         id : todoId as string,
